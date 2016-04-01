@@ -1,5 +1,6 @@
 package com.example.jakesi.fotagmobile;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,14 +20,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        List list = new List();
+        Item item = new Item("a","b",5);
+        list.addItem(item);
+
+        ItemAdapter ia = new ItemAdapter(this, list.items);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(ia);
+
+        Item item2= new Item("a","b",5);
+        list.addItem(item);
+        ia.add(item);
+        ia.notifyDataSetChanged();
     }
 
     @Override
