@@ -1,5 +1,6 @@
 package com.example.jakesi.fotagmobile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -55,7 +56,7 @@ public class ItemView extends RelativeLayout{
 
                 intent.putExtra("image", item.getResourceName());
                 intent.putExtra("url", item.getImageUrl());
-                getContext().startActivity(intent);
+                ((Activity)getContext()).startActivityForResult(intent,1);
             }
         });
     }
