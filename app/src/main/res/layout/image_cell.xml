@@ -2,7 +2,7 @@
 <com.example.jakesi.fotagmobile.ItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_marginTop="12dp"
-    android:gravity="center_horizontal"
+    android:layout_centerHorizontal="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,6 +13,18 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
         android:adjustViewBounds="true"
-        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:id="@+id/imageView" />
+
+    <RatingBar
+        style="?android:attr/ratingBarStyleIndicator"
+        android:id="@+id/ratingBar"
+        android:isIndicator="false"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:layout_below="@+id/imageView"
+        />
 </com.example.jakesi.fotagmobile.ItemView>

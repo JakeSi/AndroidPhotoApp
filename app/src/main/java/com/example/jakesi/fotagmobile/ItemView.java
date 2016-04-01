@@ -1,27 +1,23 @@
 package com.example.jakesi.fotagmobile;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by jakesi on 16-03-31.
  */
-public class ItemView extends RelativeLayout implements Observer {
+public class ItemView extends RelativeLayout{
     private ImageView imageView;
     private Item m;
+    private RatingBar ratingBar;
 
     public static ItemView inflate(ViewGroup parent) {
         return (ItemView) LayoutInflater.from(parent.getContext())
@@ -42,46 +38,46 @@ public class ItemView extends RelativeLayout implements Observer {
         super(context, attrs, defStyle);
     }
 
-    public void setItem(Item item) {
+    public void setItem(final Item item) {
         // TODO: set up image URL
         m = item;
         imageView = (ImageView) findViewById(R.id.imageView);
-        new GetImageFromUrlTask(this.imageView).execute("https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg");
-//        imageView.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), FullViewActivity.class);
-//                intent.putExtra("image", modelImage.resourceName);
-//                getContext().startActivity(intent);
-//            }
-//        });
+        addListenerOnRatingBar();
+        if(!item.getImageUrl().isEmpty()){
+            new GetImageFromUrlTask(this.imageView).execute(item.getImageUrl());
+        }else if(!item.getResourceName().isEmpty()){
+            imageView.setImageResource(getResources().getIdentifier(item.getResourceName(), "drawable", getContext().getPackageName()));
+        }
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FullScreenActivity.class);
+
+                intent.putExtra("image", item.getResourceName());
+                intent.putExtra("url", item.getImageUrl());
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     public ImageView getImageView () {
         return imageView;
     }
 
+    public void addListenerOnRatingBar() {
 
-    @Override
-    public void update(Observable observable, Object data) {
-//        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.contentmain);
-//        viewGroup.removeAllViews();
-//
-//        if (model.collection.size() == 0) {
-//            pictures = new ArrayList<ViewImage>();
-//        }
-//
-//        else if (model.collection.size() > pictures.size()) {
-//            for (int i = pictures.size(); i < model.collection.size(); i++ ) {
-//                ViewImage imageView = new ViewImage(getContext(), model.collection.get(i), model);
-//                pictures.add(imageView);
-//            }
-//        }
-//
-//        for (int i = 0; i < model.collection.size(); i++) {
-//            if (model.collection.get(i).rating >= model.filter) {
-//                viewGroup.addView(pictures.get(i));
-//            }
-//        }
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        ratingBar.setRating(m.getRating());
+
+        //if rating value is changed,
+        //display the current rating value in the result (textview) automatically
+        ratingBar.setOnRatingBarChangeListener(new RatingBarChangeListener());
+    }
+
+    class RatingBarChangeListener implements  RatingBar.OnRatingBarChangeListener {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            m.setRating((int)rating);
+        }
     }
 }
