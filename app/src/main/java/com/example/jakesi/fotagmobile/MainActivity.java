@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-            // create alert dialog http://i.imgur.com/0hyCCGM.jpg
+            // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
 
             // show it
@@ -143,5 +143,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-
