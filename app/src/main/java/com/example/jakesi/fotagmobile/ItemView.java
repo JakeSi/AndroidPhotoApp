@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -19,6 +21,7 @@ public class ItemView extends RelativeLayout{
     private ImageView imageView;
     private Item m;
     private RatingBar ratingBar;
+    private ImageButton revertButton;
 
     public static ItemView inflate(ViewGroup parent) {
         return (ItemView) LayoutInflater.from(parent.getContext())
@@ -43,6 +46,7 @@ public class ItemView extends RelativeLayout{
         // TODO: set up image URL
         m = item;
         imageView = (ImageView) findViewById(R.id.imageView);
+        revertButton = (ImageButton) findViewById(R.id.revertButton);
         addListenerOnRatingBar();
         if(!item.getImageUrl().isEmpty()){
             new GetImageFromUrlTask(this.imageView).execute(item.getImageUrl());
@@ -59,6 +63,13 @@ public class ItemView extends RelativeLayout{
                 ((Activity)getContext()).startActivityForResult(intent,1);
             }
         });
+        revertButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ratingBar.setRating(0);
+            }
+        });
+
     }
 
     public ImageView getImageView () {

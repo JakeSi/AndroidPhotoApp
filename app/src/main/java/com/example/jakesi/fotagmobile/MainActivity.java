@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 
 import java.util.ArrayList;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.action_load) {
             Item img;
             for(int i = 1; i <= 10 ;i++){
-                img = new Item("","image_"+i,(int)(Math.random()*6 - 1));
+                img = new Item("","image_"+i,0);
                 ia.addItem(img);
             }
             ia.notifyDataSetChanged();
@@ -142,4 +141,5 @@ public class MainActivity extends AppCompatActivity {
             ia.getFilter().filter(String.valueOf((int)rating));
         }
     }
+
 }

@@ -27,4 +27,12 @@
         android:stepSize="1.0"
         android:layout_below="@+id/imageView"
         />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@+id/ratingBar"
+        android:layout_below="@+id/imageView"
+        android:background="@android:drawable/ic_menu_revert"
+        android:id="@+id/revertButton"/>
 </com.example.jakesi.fotagmobile.ItemView>
